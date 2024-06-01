@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            height: 93.5vh;
+            background: rgb(24,25,26);
+            background: linear-gradient(74deg, rgba(24,25,26,1) 15%, rgba(36,37,38,1) 49%, rgba(58,59,60,1) 89%);
+        }
+
+        .container {
+            border: 0px solid white;
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            width: 580px;
+            height: 750px;
+            gap: 1px 1px;
+            justify-content: center;
+            align-content: center;
+            margin: 0 auto;
+            margin-top: 3%;
+            background: gainsboro;
+            border-radius: 20px;
+            box-shadow: 5px 5px #202124;
+        }
+
+        .result {
+            grid-column: 1 / 5;
+            font-size: 30px;
+            font-family: 'Segoe UI';
+            border-radius: 10px;
+        }
+
+        #btn_1, #btn_4, #btn_7, #btn_dot {
+            grid-column: 1;
+        }
+
+        #delete_btn, #clear_btn, #btn_plus, #btn_subt, #btn_mul, #btn_divide, #btn_equals, #btn_dot, #btn_0 {
+            background-color: dimgray;
+        }
+
+        #btn_1, #btn_2, #btn_3, #btn_4, #btn_5, #btn_6, #btn_7, #btn_8, #btn_9 {
+            background-color: silver;
+        } 
+
+        #btn_plus {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        #btn_subt {
+            grid-column: 4;
+            grid-row: 2;
+        }
+
+        #btn_mul {
+            grid-column: 4;
+            grid-row: 3;
+        }
+
+        #btn_divide {
+            grid-column: 4;
+            grid-row: 4;
+        }
+
+        #btn_equals {
+            grid-column: 4;
+            grid-row: 5 / span 2;
+            height: 210px;
+        }
+
+        #btn_0 {
+            grid-column: 2 / span 2;
+            grid-row: 6;
+            width: 210px;
+        }
+
+        .container input {
+            height: 49px;
+            padding: 25px;
+            margin: 4px;
+        }
+
+        #btn_equals, #btn_0 {
+            border-radius: 10px;
+        }
+
+        .container .btn {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            font-size: 25px;
+            font-family: 'Segoe UI';
+            box-shadow: 3px 3px #a91d3a;
+        }
+
+        .btn:active {
+            transform: scale(0.9);
+        }
+
+        #navbar {
+            padding: 10px;
+            border-radius: 10px;
+            position: absolute;
+            opacity: 0;
+        }
+
+        .div_nav {
+            position: absolute;
+            border: 1px solid white;
+            height: 100px;
+            width: 100px;
+            background-color: white;
+            margin-top: 40px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .div_nav.show {
+            opacity: 1;
+        }
+
+        #history {
+            position: absolute;
+            grid-column: 1;
+            grid-row: 1;
+            height: 20px;
+            width: 100px;
+            margin-left: 36%;
+            margin-top: 20px;
+            border-radius: 3px;
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                border: 0px solid white;
+                display: grid;
+                grid-template-columns: auto auto auto auto;
+                width: 430px;
+                height: 700px;
+                gap: 10px 10px;
+                justify-content: center;
+                align-content: center;
+                margin: 0 auto;
+                margin-top: 20%;
+                background: gainsboro;
+                border-radius: 20px;
+                box-shadow: 5px 5px #202124;
+            }
+
+            .container .btn {
+                width: 75px;
+                height: 75px;
+                border-radius: 10px;
+                font-size: 18px;
+                font-family: 'Segoe UI';
+                box-shadow: 3px 3px #a91d3a;
+            }
+
+            #btn_equals {
+                grid-column: 4;
+                grid-row: 5 / span 2;
+                height: 160px;
+            }
+
+            #btn_0 {
+                grid-column: 2 / span 2;
+                grid-row: 6;
+                width: 180px;
+            }
+
+        }
+            
+    </style>
+</head>
+<body>
+    <button id="navbar" onclick="navshow()">►</button>
+    <div class="div_nav" id="navdiv">
+    </div>
+    <input type="input" placeholder="history" id="history">
+    <div class="container">
+        <input type="input" placeholder="enter number here" id="result" class="result" readonly="readonly">
+        <input type="button" value="del" onclick="delete_()" id="delete_btn" class="btn">
+        <input type="button" value="C" onclick="clear_result()" id="clear_btn" class="btn">
+        <input type="button" value="1" onclick="show_numbers('1')" id="btn_1" class="btn">
+        <input type="button" value="2" onclick="show_numbers('2')" id="btn_2" class="btn">
+        <input type="button" value="3" onclick="show_numbers('3')" id="btn_3" class="btn">
+        <input type="button" value="+" onclick="show_numbers('+')" id="btn_plus" class="btn">
+        <input type="button" value="4" onclick="show_numbers('4')" id="btn_4" class="btn">
+        <input type="button" value="5" onclick="show_numbers('5')" id="btn_5" class="btn">
+        <input type="button" value="6" onclick="show_numbers('6')" id="btn_6" class="btn">
+        <input type="button" value="-" onclick="show_numbers('-')" id="btn_subt" class="btn">
+        <input type="button" value="7" onclick="show_numbers('7')" id="btn_7" class="btn">
+        <input type="button" value="8" onclick="show_numbers('8')" id="btn_8" class="btn">
+        <input type="button" value="9" onclick="show_numbers('9')" id="btn_9" class="btn">
+        <input type="button" value="*" onclick="show_numbers('*')" id="btn_mul" class="btn">
+        <input type="button" value="." onclick="show_numbers('.')" id="btn_dot" class="btn">
+        <input type="button" value="0" onclick="show_numbers('0')" id="btn_0" class="btn">
+        <input type="button" value="/" onclick="show_numbers('/')" id="btn_divide" class="btn">
+        <input type="button" value="=" onclick="solve()" id="btn_equals" class="btn">
+    </div>
+
+    <script>
+        function show_numbers(number) {
+            document.getElementById('result').value += number;
+        }
+
+        function clear_result() {
+            document.getElementById('result').value = "";
+        }
+
+        function delete_() {
+            const delete_last = document.getElementById('result');
+            delete_last.value = delete_last.value.slice(0, -1);
+        }
+
+        function append_number() {
+            let num = document.getElementById('result').value;
+            document.getElementById('history').value = num;
+        }
+
+        function solve() {
+            let num = document.getElementById('result').value;
+            append_number()
+            let formulate = eval(num);
+            document.getElementById('result').value = formulate;
+        }
+
+        function navshow() {
+            const nav = document.getElementById('navdiv');
+            nav.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
